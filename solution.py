@@ -61,6 +61,7 @@ def own_simple_erosion(image):
 
 # Zadanie na ocenę bardzo dobrą
 def own_erosion(image, kernel=None):
+
     new_image = np.zeros(image.shape, dtype=image.dtype)
     if kernel is None:
         kernel = np.array([[0, 1, 0],
@@ -73,22 +74,24 @@ def own_erosion(image, kernel=None):
     central = []
     central.append((size[0]/2))
     central.append((size[1]/2))
-    central[0] = int (central[0])
+    central[0] = int(central[0])
     central[1] = int(central[1])
     print(central)
 
-    for x in range(image.shape[0] - 2):
-         for y in range(image.shape[1] - 2):  # sprawdzamy po polei pixele obrazu
+    for x in range(image.shape[0] - 5):
+         for y in range(image.shape[1] - 5):  # sprawdzamy po polei pixele obrazu
+             flag = False
 
              for kerX in range(kernel.shape[0]):
                  for kerY in range (kernel.shape[1]):  # i porównanie z wszystkimi elementami jądra
                      if kernel[kerX, kerY] == 1:
-                         if image[x-central[0]+kerX, y-central[1]+kerY]==0:
-                            new_image[x, y] = 0
+                         if image[x+kerX-central[0], y+kerY-central[1]] == 0:
+                            flag=True
 
-
-                     else :
-                         new_image[x, y]= image[x, y]
+             if flag==True:
+                 new_image[x, y] = 0
+             else:
+                 new_image[x, y]=image[x,y]
 
 
 
